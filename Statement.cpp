@@ -27,7 +27,7 @@ void PrintStatement::evaluate(SymbolTable &symTab) {
 //Start AS 
 
 void AssignmentStatement::evaluate(SymbolTable &symTab) {
-    symTab.addItem(_val, _toAssign);
+    symTab.addItem(_val, _assign->evaluate(symTab));
 }
 
 // END AS

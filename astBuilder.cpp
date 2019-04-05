@@ -20,6 +20,8 @@ std::unique_ptr<AbstractStatement> ASTBuilder::statement() {
 
     auto tok = _tokens->getToken();
 
+    // std::cout << "ASTBuilder::statement(): " << tok->getTok() << std::endl;
+
     if ( tok->isKeywordPrint() ) {
         _tokens->ungetToken();
         return print();
@@ -33,8 +35,10 @@ std::unique_ptr<AssignmentStatement> ASTBuilder::assign() {
 
     auto tok = _tokens->getToken();
 
+    // std::cout << "ASTBuilder::assign(): " << tok->getTok() << std::endl;
+
     if ( !tok->isIdentifier() ) {
-        std::cout << "Error ASTBuilder::assign()" << std::endl;
+        std::cout << "Error ASTBuilder::assign()..token is " << tok->getTok() << std::endl;
         exit(1);
     }
 
@@ -43,20 +47,15 @@ std::unique_ptr<AssignmentStatement> ASTBuilder::assign() {
     tok = _tokens->getToken();
 
     if ( !tok->isAssign() ) {
-        std::cout << "Error ASTBuilder::assign()" << std::endl;
+        std::cout << "Error ASTBuilder::assign()..token is " << tok->getTok() << std::endl;
         exit(1);
     }
 
-    tok = _tokens->getToken();
-
-    if ( !tok->isIdentifier() ) {
-        std::cout << "Error ASTBuilder::assign()" << std::endl;
-        exit(1);
-    }
+    auto expr = arithExpr();
 
     return std::make_unique<AssignmentStatement>(
         identifier,
-        std::stoi(tok->getTok())
+        std::move(expr)
     );
 }
 
@@ -135,6 +134,7 @@ std::unique_ptr<AbstractNode> ASTBuilder::arithPrimary() {
         return nestedNode;
 
     } else {
+        _tokens->ungetToken();
         return arithFactor();
     }
 }

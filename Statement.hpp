@@ -5,6 +5,7 @@
 #include <string>
 
 #include "SymbolTable.hpp"
+#include "Node.hpp"
 
 class AbstractStatement {
 public:
@@ -41,8 +42,8 @@ private:
 class AssignmentStatement: public AbstractStatement {
 
 public:
-    AssignmentStatement(std::string val, int toAssign):
-        _val{val}, _toAssign{toAssign}
+    AssignmentStatement(std::string val, std::unique_ptr<AbstractNode> toAssign):
+        _val{val}, _assign{std::move(toAssign)}
     {}
     ~AssignmentStatement() = default;
 
@@ -50,7 +51,7 @@ public:
 
 private:
     std::string _val;
-    int _toAssign;
+    std::unique_ptr<AbstractNode> _assign;
 };
 
 #endif
