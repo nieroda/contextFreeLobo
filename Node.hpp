@@ -2,14 +2,16 @@
 #define __AST__NODE_HPP
 
 #include "Token.hpp"
-
-class SymbolTable {};
+#include "SymbolTable.hpp"
 
 class AbstractNode {
 public:
     AbstractNode(std::shared_ptr<Token> tok): _tok{tok} {}
     virtual int evaluate(SymbolTable &symTab) = 0;
     virtual ~AbstractNode() = default;
+
+    std::shared_ptr<Token> getBaseClassToken() { return _tok; }
+
 private:
     std::shared_ptr<Token> _tok;
 };
