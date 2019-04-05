@@ -26,3 +26,6 @@ int ExprNode::evaluate(SymbolTable &symTab) {
 
 }
 
+int IntNode::evaluate(SymbolTable &symTab) {
+    return std::stoi(getBaseClassToken()->getTok());
+}

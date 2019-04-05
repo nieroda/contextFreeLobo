@@ -5,6 +5,7 @@
 
 #include "Tokenizer.hpp"
 #include "Token.hpp"
+#include "astBuilder.hpp"
 
 
 // explicit char_separator(const Char* dropped_delims,
@@ -15,21 +16,12 @@
 
 int main() {
 
-    std::unique_ptr<Tokenizer> tok = std::make_unique<Tokenizer>("data.txt");
-
-    // auto token = tok->getToken();
-
-    // while ( !token->isEOF() ) {
-
-    //     std::cout << "Token: " << token->getTok() << std::endl;
-    //     token = tok->getToken();
-
-    // }
-
-    /* Tests */
-    auto token = tok->getToken();
-
-
+    std::unique_ptr<Tokenizer> tokens = std::make_unique<Tokenizer>("data.txt");
+    
+    auto astBuilder = std::make_unique<ASTBuilder>(std::move(tokens));
+    auto ast = astBuilder->statements();
+    SymbolTable symTab;
+    ast->evaluate(symTab);
 
 
     return 0;

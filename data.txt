@@ -1,4 +1,6 @@
 foo = 1
 bar = 50 
+expr = 1 + 1 + 1 + 1 + 2 + 3 * 10
+print expr
 print bar 
->= <= < > 
+print foo

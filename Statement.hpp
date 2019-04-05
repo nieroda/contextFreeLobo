@@ -9,7 +9,7 @@
 class AbstractStatement {
 public:
     virtual void evaluate(SymbolTable &) = 0;
-
+    virtual ~AbstractStatement() = default;
 };
 
 class GroupedStatements: public AbstractStatement {
@@ -36,6 +36,21 @@ public:
 
 private:
     std::string _identifier;
+};
+
+class AssignmentStatement: public AbstractStatement {
+
+public:
+    AssignmentStatement(std::string val, int toAssign):
+        _val{val}, _toAssign{toAssign}
+    {}
+    ~AssignmentStatement() = default;
+
+    virtual void evaluate(SymbolTable &);
+
+private:
+    std::string _val;
+    int _toAssign;
 };
 
 #endif

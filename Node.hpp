@@ -29,11 +29,24 @@ public:
         AbstractNode(tok)
     {}
 
+    ExprNode(
+        std::shared_ptr<Token> tok
+    ): AbstractNode(tok) {}
+
     virtual int evaluate(SymbolTable &symTab);
     virtual ~ExprNode() = default; 
 
-private:
+//rip
+public:
     std::unique_ptr<AbstractNode> _left, _right;
+};
+
+class IntNode: public AbstractNode {
+public:
+    IntNode(std::shared_ptr<Token> tok): AbstractNode(tok) {}
+    virtual ~IntNode() = default;
+
+    virtual int evaluate(SymbolTable &);
 };
 
 #endif

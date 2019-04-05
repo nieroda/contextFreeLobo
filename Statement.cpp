@@ -5,7 +5,7 @@
 
 
 void GroupedStatements::evaluate(SymbolTable &symTab) {
-    for_each(_statements.begin(), _statements.end(), [](auto &&stmt) {
+    for_each(_statements.begin(), _statements.end(), [&](auto &&stmt) {
         stmt->evaluate(symTab);
     });
 }
@@ -23,3 +23,11 @@ void PrintStatement::evaluate(SymbolTable &symTab) {
 }
 
 // END PS
+
+//Start AS 
+
+void AssignmentStatement::evaluate(SymbolTable &symTab) {
+    symTab.addItem(_val, _toAssign);
+}
+
+// END AS

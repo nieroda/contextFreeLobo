@@ -16,13 +16,17 @@ public:
     bool isGTE()            { return _tok == ">=";  }
     bool isLT()             { return _tok == "<";   }
     bool isLTE()            { return _tok == "<=";  }
-    bool isAssign()         { return _tok == "==";  }
-    bool isEquality()       { return _tok == "=";   }
+    bool isEquality()       { return _tok == "==";  }
+    bool isAssign()         { return _tok == "=";   }
     bool isSubtraction()    { return _tok == "-";   }
     bool isAddition()       { return _tok == "+";   }
     bool isMultiplication() { return _tok == "*";   }
     bool isDivision()       { return _tok == "/";   }
     bool isModOp()          { return _tok == "%";   }
+    bool isLParen()         { return _tok == "(";   }
+    bool isRParen()         { return _tok == ")";   }
+
+    bool isKeywordPrint()   { return _tok == "print"; }
 
     bool isKeyword ()   { return _tok == "print"; }
     bool isIdentifier() { return !isKeyword() && 
