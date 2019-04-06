@@ -25,7 +25,7 @@ public:
 
     virtual void evaluate(SymbolTable &);
     void addStatement(std::unique_ptr<AbstractStatement> stmt);
-    virtual void codegen(CompilerContext *) = 0;
+    virtual void codegen(CompilerContext *);
 
 
 private:
@@ -39,7 +39,7 @@ public:
     ~PrintStatement() = default;
 
     virtual void evaluate(SymbolTable &);
-    virtual void codegen(CompilerContext *) = 0;
+    virtual void codegen(CompilerContext *);
 
 
 private:
@@ -55,7 +55,7 @@ public:
     ~AssignmentStatement() = default;
 
     virtual void evaluate(SymbolTable &);
-    virtual void codegen(CompilerContext *) = 0;
+    virtual void codegen(CompilerContext *);
 
 
 private:

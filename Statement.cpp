@@ -8,6 +8,7 @@ void GroupedStatements::evaluate(SymbolTable &symTab) {
     for_each(_statements.begin(), _statements.end(), [&](auto &&stmt) {
         stmt->evaluate(symTab);
     });
+    
 }
 
 void GroupedStatements::addStatement(std::unique_ptr<AbstractStatement> stmt) {
@@ -18,6 +19,10 @@ void GroupedStatements::codegen(CompilerContext *c) {
     for_each(_statements.begin(), _statements.end(), [&](auto &&stmt) {
         stmt->codegen(c);
     });
+
+
+    Function *callee = c->TheModule->
+
 }
 
 // END GS
@@ -28,6 +33,7 @@ void PrintStatement::evaluate(SymbolTable &symTab) {
     std::cout << symTab.getItem(_identifier) << std::endl;
 }
 
+// https://stackoverflow.com/questions/35526075/llvm-how-to-implement-print-function-in-my-language
 void PrintStatement::codegen(CompilerContext *c) {
     //todo
 }
@@ -39,6 +45,7 @@ void PrintStatement::codegen(CompilerContext *c) {
 void AssignmentStatement::evaluate(SymbolTable &symTab) {
     symTab.addItem(_val, _assign->evaluate(symTab));
 }
+
 
 void AssignmentStatement::codegen(CompilerContext *c) {
     c->NamedValues[_val] = llvm::ConstantInt::get(c->TheContext, llvm::APInt(32, 3, false));

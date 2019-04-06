@@ -29,7 +29,28 @@ int ExprNode::evaluate(SymbolTable &symTab) {
 }
 
 llvm::Value *ExprNode::codegen(CompilerContext *c) {
-    return llvm::ConstantFP::get(c->TheContext, llvm::APFloat(3.));
+
+    llvm::Value *L = _left->codegen(c);
+    llvm::Value *R = _right->codegen(c);
+
+    auto tok = getBaseClassToken();
+
+    if ( tok->isSubtraction()  )
+        return c->Builder.CreateSub(L, R, "subtmp");
+        //return c->Builder.CreateFSub(L, R, "subtmp");
+    else if ( tok->isAddition() )
+        return c->Builder.CreateAdd(L, R, "addtmp");
+        // return c->Builder.CreateFAdd(L, R, "addtmp");
+    else if ( tok->isMultiplication() )
+        return c->Builder.CreateMul(L, R, "multmp");
+    // else if ( tok->isDivision() )
+    //     return left / right;
+    // else if ( tok->isModOp() )
+    //     return left % right;
+    return nullptr;
+
+    // just + - *
+    // return llvm::ConstantFP::get(c->TheContext, llvm::APFloat(3.));
 }
 
 llvm::Value *IntNode::codegen(CompilerContext *c) {
