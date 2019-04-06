@@ -1,8 +1,8 @@
 #include <iostream>
 
 #include "Statement.hpp"
-
-
+#include <algorithm>
+#include <memory>
 
 void GroupedStatements::evaluate(SymbolTable &symTab) {
     for_each(_statements.begin(), _statements.end(), [&](auto &&stmt) {

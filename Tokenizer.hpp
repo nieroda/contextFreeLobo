@@ -1,7 +1,7 @@
 #ifndef __TOKENIZER__HPP
 #define __TOKENIZER__HPP
 
-
+#include <memory>
 #include <boost/tokenizer.hpp>
 #include <string>
 #include <vector>
