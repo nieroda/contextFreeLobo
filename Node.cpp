@@ -53,6 +53,12 @@ llvm::Value *ExprNode::codegen(CompilerContext *c) {
     // return llvm::ConstantFP::get(c->TheContext, llvm::APFloat(3.));
 }
 
+void ExprNode::dumpAST(std::string tab) {
+    std::cout << tab << "ExprNode: " << this << std::endl;
+    _left->dumpAST(tab + "\t");
+    _right->dumpAST(tab + "\t");
+}
+
 llvm::Value *IntNode::codegen(CompilerContext *c) {
     return llvm::ConstantFP::get(c->TheContext, llvm::APFloat(3.));
 }
@@ -68,3 +74,6 @@ int IntNode::evaluate(SymbolTable &symTab) {
     return std::stoi(getBaseClassToken()->getTok());
 }
 
+void IntNode::dumpAST(std::string tab) {
+    std::cout << tab << "IntNode: " << this << " " << getBaseClassToken()->getTok() << std::endl;
+}

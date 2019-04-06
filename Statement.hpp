@@ -15,6 +15,8 @@ public:
 
     virtual void codegen(CompilerContext *) = 0;
 
+    virtual void dumpAST(std::string) = 0;
+
 };
 
 class GroupedStatements: public AbstractStatement {
@@ -26,6 +28,8 @@ public:
     virtual void evaluate(SymbolTable &);
     void addStatement(std::unique_ptr<AbstractStatement> stmt);
     virtual void codegen(CompilerContext *);
+
+    virtual void dumpAST(std::string);
 
 
 private:
@@ -40,6 +44,8 @@ public:
 
     virtual void evaluate(SymbolTable &);
     virtual void codegen(CompilerContext *);
+
+    virtual void dumpAST(std::string);
 
 
 private:
@@ -56,6 +62,8 @@ public:
 
     virtual void evaluate(SymbolTable &);
     virtual void codegen(CompilerContext *);
+
+    virtual void dumpAST(std::string);
 
 
 private:

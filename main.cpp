@@ -31,7 +31,8 @@ int main() {
     auto astBuilder = std::make_unique<ASTBuilder>(std::move(tokens));
     auto ast = astBuilder->statements();
     SymbolTable symTab;
-    ast->evaluate(symTab);
+    // ast->evaluate(symTab);
+    ast->dumpAST("");
 
 
     return 0;

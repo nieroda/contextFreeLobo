@@ -25,6 +25,13 @@ void GroupedStatements::codegen(CompilerContext *c) {
 
 }
 
+void GroupedStatements::dumpAST(std::string tab) {
+    std::cout << tab << "GroupedStatements: " << this << std::endl;
+    for_each(_statements.begin(), _statements.end(), [&](auto &&stmt) {
+        stmt->dumpAST(tab + "\t");
+    });
+}
+
 // END GS
 
 // START PS
@@ -38,6 +45,10 @@ void PrintStatement::codegen(CompilerContext *c) {
     //todo
 }
 
+void PrintStatement::dumpAST(std::string tab) {
+    std::cout << tab << "PrintStatement: " << this << "\t" << _identifier  << std::endl;
+}
+
 // END PS
 
 //Start AS 
@@ -49,6 +60,11 @@ void AssignmentStatement::evaluate(SymbolTable &symTab) {
 
 void AssignmentStatement::codegen(CompilerContext *c) {
     c->NamedValues[_val] = llvm::ConstantInt::get(c->TheContext, llvm::APInt(32, 3, false));
+}
+
+void AssignmentStatement::dumpAST(std::string tab) {
+    std::cout << tab << "AssignmentStatement: " << this << "\t" << _val << " =" << std::endl;
+    _assign->dumpAST(tab + "\t");
 }
 
 // END AS
