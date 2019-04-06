@@ -7,6 +7,7 @@
 #include "SymbolTable.hpp"
 #include "CompilerContext.hpp"
 #include "Node.hpp"
+#include "llvm/IR/Function.h"
 
 class AbstractStatement {
 public:
@@ -15,9 +16,10 @@ public:
 
     virtual void codegen(CompilerContext *) = 0;
 
-    virtual void dumpAST(std::string) = 0;
+    virtual void dumpAST(std::string, CompilerContext *) = 0;
 
 };
+
 
 class GroupedStatements: public AbstractStatement {
     
@@ -29,7 +31,7 @@ public:
     void addStatement(std::unique_ptr<AbstractStatement> stmt);
     virtual void codegen(CompilerContext *);
 
-    virtual void dumpAST(std::string);
+    virtual void dumpAST(std::string, CompilerContext *);
 
 
 private:
@@ -45,7 +47,7 @@ public:
     virtual void evaluate(SymbolTable &);
     virtual void codegen(CompilerContext *);
 
-    virtual void dumpAST(std::string);
+    virtual void dumpAST(std::string, CompilerContext *);
 
 
 private:
@@ -63,12 +65,49 @@ public:
     virtual void evaluate(SymbolTable &);
     virtual void codegen(CompilerContext *);
 
-    virtual void dumpAST(std::string);
+    virtual void dumpAST(std::string, CompilerContext *);
 
 
 private:
     std::string _val;
     std::unique_ptr<AbstractNode> _assign;
 };
+
+// class Function {
+
+// public:
+//     ~Function() = default;
+
+//     virtual void evaluate(
+//         SymbolTable &,
+//         std::vector<std::unique_ptr<AbstractNode>>
+//     ) = 0;
+
+
+// }
+
+
+class FunctionCall: public AbstractStatement {
+public:
+
+    FunctionCall(
+        std::string functionName,
+        std::unique_ptr<std::vector<std::unique_ptr<AbstractNode>>> funcArgs
+    ): _functionName{functionName}, _functionArgs{std::move(funcArgs)}
+    {}
+
+    ~FunctionCall() = default;
+
+    //virtual llvm::Function codegen(CompilerContext *);
+    virtual void codegen(CompilerContext *);
+    virtual void evaluate(SymbolTable &);
+    virtual void dumpAST(std::string, CompilerContext *);
+
+private:
+    std::string _functionName;
+    std::unique_ptr<std::vector<std::unique_ptr<AbstractNode>>> _functionArgs;
+    // std::unique_ptr<GroupedStatements> _funcBody;
+};
+
 
 #endif

@@ -16,7 +16,7 @@ public:
     virtual llvm::Value *codegen(CompilerContext *) = 0;
     std::shared_ptr<Token> getBaseClassToken() { return _tok; }
 
-    virtual void dumpAST(std::string) = 0;
+    virtual void dumpAST(std::string, CompilerContext *) = 0;
 
 
 private:
@@ -43,7 +43,7 @@ public:
     virtual llvm::Value *codegen(CompilerContext *);
     virtual int evaluate(SymbolTable &symTab);
     virtual ~ExprNode() = default; 
-    virtual void dumpAST(std::string);
+    virtual void dumpAST(std::string, CompilerContext *);
 
 //rip
 public:
@@ -57,7 +57,7 @@ public:
 
     virtual llvm::Value *codegen(CompilerContext *);
     virtual int evaluate(SymbolTable &);
-    virtual void dumpAST(std::string);
+    virtual void dumpAST(std::string, CompilerContext *);
 };
 
 #endif

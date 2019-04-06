@@ -7,7 +7,7 @@
 Tokenizer::Tokenizer(std::string fileName) {
 
     static auto dropped_delims = " \n\t\r";
-    static auto kept_delims = "/%+-=";
+    static auto kept_delims = "/%+-=<>(),;";
 
     std::ifstream fileStream(fileName);
     std::string fileHolder;
