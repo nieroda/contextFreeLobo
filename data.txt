@@ -1,11 +1,22 @@
 
 nomaHacks<myFunction>(funcVal1, funcVal2, funcVal3) <<
-    foo = 5
-    bar = 10 
-    eee = funcVal1 + funcVal2 + funcVal3
-    print eee
+    
+    sumAll = funcValue1 + funcValue2 + funcVal3
+    foo = funcVal1 + funcVal1 
+    bar = funcVal2 * funcVal2 
+
+    print foo
+    print bar
+    print funcVal1
+    print funcVal2
+    print funcVal3
+
 >>
 
 
 
 callLobo<myFunction>(1, 2, 3);
+
+
+
+

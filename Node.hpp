@@ -1,10 +1,11 @@
 #ifndef __AST__NODE_HPP
 #define __AST__NODE_HPP
 
+class SymbolTable;
 #include "Token.hpp"
-#include "SymbolTable.hpp"
+//#include "SymbolTable.hpp"
 
-#include "llvm/IR/Value.h"
+
 #include "CompilerContext.hpp"
 
 class AbstractNode {

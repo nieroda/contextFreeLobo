@@ -1,8 +1,5 @@
 #include "astBuilder.hpp"
-#include "FunctionDef.hpp"
-
 #include <iostream>
-#include <memory>
 
 std::unique_ptr<AbstractStatement> ASTBuilder::program() {
 
@@ -180,7 +177,7 @@ void ASTBuilder::functionDef() {
     tok = _tokens->getToken(); // <
 
     auto fDef = std::make_shared<FunctionDefinition>(funcName, funcArgNames, std::move(stmts));
-    _functionMap->addFunction(funcName, fDef);
+    symTab.addFunction(funcName, fDef);
 }
 
 std::vector<std::string> ASTBuilder::collectFunctionArgNames() {

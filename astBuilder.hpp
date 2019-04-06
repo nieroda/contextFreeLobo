@@ -1,20 +1,18 @@
 #ifndef __astBuilder_HPP
 #define __astBuilder_HPP
 
-#include "Tokenizer.hpp"
+#include "SymbolTable.hpp"
 #include "Statement.hpp"
-#include "Node.hpp"
-#include "Token.hpp"
+#include "Tokenizer.hpp"
 
-#include "FunctionDef.hpp"
-#include "FunctionMap.hpp"
+#include <vector>
 
 class ASTBuilder {
 
 public:
-    ASTBuilder(std::unique_ptr<Tokenizer> tokens, std::shared_ptr<FunctionMap> fMap):
+    ASTBuilder(std::unique_ptr<Tokenizer> tokens, SymbolTable &table):
         _tokens{std::move(tokens)},
-        _functionMap{fMap}
+        symTab{table}
     {}
 
     std::unique_ptr<AbstractStatement> program();
@@ -42,7 +40,8 @@ public:
 
 private:
     std::unique_ptr<Tokenizer> _tokens;
-    std::shared_ptr<FunctionMap> _functionMap;
+    // std::shared_ptr<FunctionMap> _functionMap;
+    SymbolTable &symTab;
 };
 
 #endif
