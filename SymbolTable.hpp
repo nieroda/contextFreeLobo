@@ -6,6 +6,9 @@
 #include <memory>
 #include <algorithm>
 
+// #include "FunctionMap.hpp"
+class FunctionMap;
+
 //Assuming all accesses are defined accesses -- beef up later
 
 class SymbolTable {
@@ -26,9 +29,15 @@ public:
         return true;
     }
 
+    void addFunctionMap(FunctionMap *fMap) {
+        _fMap = fMap;
+    }
+
+    FunctionMap *getFuncMap() { return _fMap; }
 
 private:
     std::map<std::string, int> _table;
+    FunctionMap * _fMap;
 };
 
 #endif
