@@ -11,9 +11,9 @@ void GroupedStatements::evaluate(SymbolTable &symTab) {
     
 }
 
-void GroupedStatements::printInstrs(llvm::LLVMContext *context) {
+void GroupedStatements::printInstrs(llvm::LLVMContext *context, SymbolTable &symTab) {
    for_each(_statements.begin(), _statements.end(), [&](auto &&stmt) {
-       stmt->printInstrs(context);
+       stmt->printInstrs(context, symTab);
    });
 }
 
@@ -44,7 +44,7 @@ void PrintStatement::codegen(CompilerContext *c) {
     //todo
 }
 
-void PrintStatement::printInstrs(llvm::LLVMContext *context) {
+void PrintStatement::printInstrs(llvm::LLVMContext *context, SymbolTable &symTab) {
        //todo
 }
 
@@ -61,8 +61,8 @@ void AssignmentStatement::codegen(CompilerContext *c) {
     c->NamedValues[_val] = llvm::ConstantInt::get(c->TheContext, llvm::APInt(32, 3, false));
 }
 
-void AssignmentStatement::printInstrs(llvm::LLVMContext *context) {
-	_assign->printInstr(context);
+void AssignmentStatement::printInstrs(llvm::LLVMContext *context, SymbolTable &symTab) {
+	_assign->printInstr(context, symTab);
        //todo
 }
 

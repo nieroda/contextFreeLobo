@@ -2,6 +2,15 @@
 #include <iostream>
 
 #include "llvm/ADT/APInt.h"
+#include "llvm/IR/IRBuilder.h"
+#include "llvm/IR/Value.h"
+#include "llvm/IR/Type.h"
+#include "llvm/IR/LLVMContext.h"
+#include "llvm/Support/raw_ostream.h"
+#include "llvm/Support/raw_os_ostream.h"
+#include "llvm/IR/Constants.h"
+#include "llvm/Passes/PassBuilder.h"
+#include <map>
 
 int ExprNode::evaluate(SymbolTable &symTab) {
 
@@ -28,7 +37,7 @@ int ExprNode::evaluate(SymbolTable &symTab) {
 
 }
 
-void ExprNode::printInstr(llvm::LLVMContext *c) {
+void ExprNode::printInstr(llvm::LLVMContext *c, SymbolTable &symTab) {
    std::cout << "Printing exprNode value\n";
 };
 
@@ -61,9 +70,13 @@ llvm::Value *IntNode::codegen(CompilerContext *c) {
     return llvm::ConstantFP::get(c->TheContext, llvm::APFloat(3.));
 }
 
-void IntNode::printInstr(llvm::LLVMContext *c, &symTab) { 
+void IntNode::printInstr(llvm::LLVMContext *context, SymbolTable &symTab) { 
      int value = evaluate(symTab);
+     double val = value * 1.0;
+     auto num = llvm::ConstantFP::get(*context, llvm::APFloat(val));
+
      std::cout << "Printing int value\n";
+     num->print(llvm::errs());
 };
 
 
