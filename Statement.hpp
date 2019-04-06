@@ -5,12 +5,16 @@
 #include <string>
 
 #include "SymbolTable.hpp"
+#include "CompilerContext.hpp"
 #include "Node.hpp"
 
 class AbstractStatement {
 public:
     virtual void evaluate(SymbolTable &) = 0;
     virtual ~AbstractStatement() = default;
+
+    virtual void codegen(CompilerContext *) = 0;
+
 };
 
 class GroupedStatements: public AbstractStatement {
@@ -21,6 +25,7 @@ public:
 
     virtual void evaluate(SymbolTable &);
     void addStatement(std::unique_ptr<AbstractStatement> stmt);
+    virtual void codegen(CompilerContext *) = 0;
 
 
 private:
@@ -34,6 +39,8 @@ public:
     ~PrintStatement() = default;
 
     virtual void evaluate(SymbolTable &);
+    virtual void codegen(CompilerContext *) = 0;
+
 
 private:
     std::string _identifier;
@@ -48,6 +55,8 @@ public:
     ~AssignmentStatement() = default;
 
     virtual void evaluate(SymbolTable &);
+    virtual void codegen(CompilerContext *) = 0;
+
 
 private:
     std::string _val;

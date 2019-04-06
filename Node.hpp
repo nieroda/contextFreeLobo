@@ -4,12 +4,16 @@
 #include "Token.hpp"
 #include "SymbolTable.hpp"
 
+#include "llvm/IR/Value.h"
+#include "CompilerContext.hpp"
+
 class AbstractNode {
 public:
     AbstractNode(std::shared_ptr<Token> tok): _tok{tok} {}
     virtual int evaluate(SymbolTable &symTab) = 0;
     virtual ~AbstractNode() = default;
 
+    virtual llvm::Value *codegen(CompilerContext *) = 0;
     std::shared_ptr<Token> getBaseClassToken() { return _tok; }
 
 private:
@@ -33,6 +37,7 @@ public:
         std::shared_ptr<Token> tok
     ): AbstractNode(tok) {}
 
+    virtual llvm::Value *codegen(CompilerContext *);
     virtual int evaluate(SymbolTable &symTab);
     virtual ~ExprNode() = default; 
 
@@ -46,6 +51,7 @@ public:
     IntNode(std::shared_ptr<Token> tok): AbstractNode(tok) {}
     virtual ~IntNode() = default;
 
+    virtual llvm::Value *codegen(CompilerContext *);
     virtual int evaluate(SymbolTable &);
 };
 

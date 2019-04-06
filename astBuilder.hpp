@@ -6,6 +6,9 @@
 #include "Node.hpp"
 #include "Token.hpp"
 
+#include <memory>
+#include <algorithm>
+
 class ASTBuilder {
 
 public:

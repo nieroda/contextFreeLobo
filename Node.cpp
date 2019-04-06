@@ -1,6 +1,8 @@
 #include "Node.hpp"
 #include <iostream>
 
+#include "llvm/ADT/APInt.h"
+
 int ExprNode::evaluate(SymbolTable &symTab) {
 
     int left =  _left-> evaluate(symTab);
@@ -26,6 +28,15 @@ int ExprNode::evaluate(SymbolTable &symTab) {
 
 }
 
+llvm::Value *ExprNode::codegen(CompilerContext *c) {
+    return llvm::ConstantFP::get(c->TheContext, llvm::APFloat(3.));
+}
+
+llvm::Value *IntNode::codegen(CompilerContext *c) {
+    return llvm::ConstantFP::get(c->TheContext, llvm::APFloat(3.));
+}
+
 int IntNode::evaluate(SymbolTable &symTab) {
     return std::stoi(getBaseClassToken()->getTok());
 }
+

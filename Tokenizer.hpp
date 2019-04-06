@@ -5,6 +5,7 @@
 #include <boost/tokenizer.hpp>
 #include <string>
 #include <vector>
+#include <memory>
 #include <fstream>
 
 #include "Token.hpp"

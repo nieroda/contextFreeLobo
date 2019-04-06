@@ -1,6 +1,7 @@
 #include "astBuilder.hpp"
 
 #include <iostream>
+#include <memory>
 
 std::unique_ptr<GroupedStatements> ASTBuilder::statements() {
 
