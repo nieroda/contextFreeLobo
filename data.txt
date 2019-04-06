@@ -1,8 +1,22 @@
-foo = 1
-bar = 50 
-expr = 1 + 1 + 1 + 1 + 2 + 3 * 10
-print expr
-print bar 
-print foo
-barr = 3546 * 3456  * expr
-print barr
+
+nomaHacks<myFunction>(funcVal1, funcVal2, funcVal3) <<
+    
+    sumAll = funcValue1 + funcValue2 + funcVal3
+    foo = funcVal1 + funcVal1 
+    bar = funcVal2 * funcVal2 
+
+    print foo
+    print bar
+    print funcVal1
+    print funcVal2
+    print funcVal3
+
+>>
+
+
+
+callLobo<myFunction>(1, 2, 3);
+
+
+
+
