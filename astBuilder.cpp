@@ -150,3 +150,4 @@ std::unique_ptr<AbstractNode> ASTBuilder::arithFactor() {
     return std::make_unique<IntNode>(tok);
 
 }
+

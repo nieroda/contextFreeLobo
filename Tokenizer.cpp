@@ -49,5 +49,3 @@ void Tokenizer::ungetToken() {
         return;
     currentPosition--;
 }
-
-

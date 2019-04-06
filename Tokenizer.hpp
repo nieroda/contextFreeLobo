@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include "llvm/IR/LLVMContext.h"
 #include <fstream>
 
 #include "Token.hpp"

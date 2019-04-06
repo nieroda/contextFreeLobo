@@ -11,6 +11,12 @@ void GroupedStatements::evaluate(SymbolTable &symTab) {
     
 }
 
+void GroupedStatements::printInstrs(llvm::LLVMContext *context) {
+   for_each(_statements.begin(), _statements.end(), [&](auto &&stmt) {
+       stmt->printInstrs(context);
+   });
+}
+
 void GroupedStatements::addStatement(std::unique_ptr<AbstractStatement> stmt) {
     _statements.push_back(std::move(stmt));
 }
@@ -38,6 +44,10 @@ void PrintStatement::codegen(CompilerContext *c) {
     //todo
 }
 
+void PrintStatement::printInstrs(llvm::LLVMContext *context) {
+       //todo
+}
+
 // END PS
 
 //Start AS 
@@ -49,6 +59,11 @@ void AssignmentStatement::evaluate(SymbolTable &symTab) {
 
 void AssignmentStatement::codegen(CompilerContext *c) {
     c->NamedValues[_val] = llvm::ConstantInt::get(c->TheContext, llvm::APInt(32, 3, false));
+}
+
+void AssignmentStatement::printInstrs(llvm::LLVMContext *context) {
+	_assign->printInstr(context);
+       //todo
 }
 
 // END AS

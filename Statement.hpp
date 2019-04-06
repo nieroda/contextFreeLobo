@@ -6,13 +6,14 @@
 
 #include "SymbolTable.hpp"
 #include "CompilerContext.hpp"
+#include "llvm/IR/LLVMContext.h"
 #include "Node.hpp"
 
 class AbstractStatement {
 public:
     virtual void evaluate(SymbolTable &) = 0;
     virtual ~AbstractStatement() = default;
-
+    virtual void printInstrs(llvm::LLVMContext *) = 0;
     virtual void codegen(CompilerContext *) = 0;
 
 };
@@ -25,6 +26,7 @@ public:
 
     virtual void evaluate(SymbolTable &);
     void addStatement(std::unique_ptr<AbstractStatement> stmt);
+    void printInstrs(llvm::LLVMContext *) ;
     virtual void codegen(CompilerContext *);
 
 
@@ -37,6 +39,7 @@ class PrintStatement: public AbstractStatement {
 public:
     PrintStatement(std::string identifier): _identifier{identifier} {}
     ~PrintStatement() = default;
+    void printInstrs(llvm::LLVMContext *); 
 
     virtual void evaluate(SymbolTable &);
     virtual void codegen(CompilerContext *);
@@ -56,6 +59,7 @@ public:
 
     virtual void evaluate(SymbolTable &);
     virtual void codegen(CompilerContext *);
+    void printInstrs(llvm::LLVMContext *); 
 
 
 private:

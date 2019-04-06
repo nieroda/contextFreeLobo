@@ -7,7 +7,7 @@
 #include "Tokenizer.hpp"
 #include "Token.hpp"
 #include "astBuilder.hpp"
-
+#include "llvm/IR/LLVMContext.h"
 
 #include "CompilerContext.hpp"
 // explicit char_separator(const Char* dropped_delims,
@@ -27,10 +27,12 @@ int main() {
     // std::map<std::string, llvm::Value *> NamedValues;
 
     CompilerContext *c = new CompilerContext();
+    llvm::LLVMContext *TheContext = new llvm::LLVMContext();
 
     auto astBuilder = std::make_unique<ASTBuilder>(std::move(tokens));
     auto ast = astBuilder->statements();
     SymbolTable symTab;
+    ast->printInstrs(TheContext);
     ast->evaluate(symTab);
 
 

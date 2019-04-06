@@ -28,6 +28,10 @@ int ExprNode::evaluate(SymbolTable &symTab) {
 
 }
 
+void ExprNode::printInstr(llvm::LLVMContext *c) {
+   std::cout << "Printing exprNode value\n";
+};
+
 llvm::Value *ExprNode::codegen(CompilerContext *c) {
 
     llvm::Value *L = _left->codegen(c);
@@ -56,6 +60,12 @@ llvm::Value *ExprNode::codegen(CompilerContext *c) {
 llvm::Value *IntNode::codegen(CompilerContext *c) {
     return llvm::ConstantFP::get(c->TheContext, llvm::APFloat(3.));
 }
+
+void IntNode::printInstr(llvm::LLVMContext *c, &symTab) { 
+     int value = evaluate(symTab);
+     std::cout << "Printing int value\n";
+};
+
 
 int IntNode::evaluate(SymbolTable &symTab) {
 

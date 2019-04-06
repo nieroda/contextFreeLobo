@@ -26,7 +26,6 @@ public:
     std::unique_ptr<AbstractNode> arithPrimary();
     std::unique_ptr<AbstractNode> arithFactor();
 
-
 private:
     std::unique_ptr<Tokenizer> _tokens;
 };
