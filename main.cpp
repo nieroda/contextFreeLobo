@@ -11,9 +11,13 @@
 
 #include "CompilerContext.hpp"
 
-int main() {
+int main(int argc, char *argv[]) {
+    if ( argc != 2) {
+        std::cout << "Expected one input file: ./a.out filename\n";
+	exit(1);
+    }
 
-    std::unique_ptr<Tokenizer> tokens = std::make_unique<Tokenizer>("data.txt");
+    std::unique_ptr<Tokenizer> tokens = std::make_unique<Tokenizer>(argv[1]);
     SymbolTable symTab;
     CompilerContext *c = new CompilerContext();
 
