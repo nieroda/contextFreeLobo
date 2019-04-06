@@ -58,6 +58,13 @@ llvm::Value *IntNode::codegen(CompilerContext *c) {
 }
 
 int IntNode::evaluate(SymbolTable &symTab) {
+
+    std::string value = getBaseClassToken()->getTok();
+
+    if (isalpha(value[0])) { //hacky
+        return symTab.getItem(value);
+    }
+
     return std::stoi(getBaseClassToken()->getTok());
 }
 

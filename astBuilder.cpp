@@ -144,6 +144,9 @@ std::unique_ptr<AbstractNode> ASTBuilder::arithFactor() {
 
     // Need error checking here
     auto tok = _tokens->getToken();
+
+    // std::cout << "ArithFactor: " << tok->getTok() << std::endl;
+
     return std::make_unique<IntNode>(tok);
 
 }

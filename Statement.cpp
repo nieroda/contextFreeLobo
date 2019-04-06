@@ -21,7 +21,7 @@ void GroupedStatements::codegen(CompilerContext *c) {
     });
 
 
-    Function *callee = c->TheModule->
+    // Function *callee = c->TheModule->
 
 }
 
