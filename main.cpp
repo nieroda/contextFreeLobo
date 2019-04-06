@@ -7,37 +7,43 @@
 #include "Tokenizer.hpp"
 #include "Token.hpp"
 #include "astBuilder.hpp"
+#include "FunctionMap.hpp"
 
 
 #include "CompilerContext.hpp"
-// explicit char_separator(const Char* dropped_delims,
-//                         const Char* kept_delims = "",
-//                         empty_token_policy empty_tokens = drop_empty_tokens)
-
-
-
 
 int main() {
 
     std::unique_ptr<Tokenizer> tokens = std::make_unique<Tokenizer>("data.txt");
-    
-    // llvm::LLVMContext TheContext;
-    // llvm::IRBuilder<> Builder(TheContext);
-    // std::unique_ptr<llvm::Module> TheModule;
-    // std::map<std::string, llvm::Value *> NamedValues;
+    std::shared_ptr<FunctionMap> fMap = std::make_shared<FunctionMap>();
 
-    CompilerContext *c = new CompilerContext();
+    // CompilerContext *c = new CompilerContext();
 
-    auto astBuilder = std::make_unique<ASTBuilder>(std::move(tokens));
-    auto ast = astBuilder->statements();
-    SymbolTable symTab;
+    // auto tok = tokens->getToken();
+
+    // while ( !tok->isEOF() ) {
+    //     std::cout << "Token: " << tok->getTok() << std::endl;
+    //     tok = tokens->getToken();
+    // }
+
+    auto astBuilder = std::make_unique<ASTBuilder>(std::move(tokens), fMap);
+    // auto ast = astBuilder->statements();
+    // SymbolTable symTab;
     // ast->evaluate(symTab);
-    ast->dumpAST("");
+    // ast->dumpAST("");
 
 
     return 0;
 
 }
+
+/*
+
+<program> -> <function_call> | <function_definition>
+<function_call> -> callLobo<|<id>|>( <arith_expr>* )
+<function_definition> -> nomaHacks<|<id>|>( <id>* ) << <statements> >>
+
+*/
 
 /*
 Token: foo

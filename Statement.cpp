@@ -68,3 +68,9 @@ void AssignmentStatement::dumpAST(std::string tab) {
 }
 
 // END AS
+
+void FunctionCall::codegen(CompilerContext *c) {}
+
+void FunctionCall::evaluate(SymbolTable &symTab) {}
+
+void FunctionCall::dumpAST(std::string tab) {}

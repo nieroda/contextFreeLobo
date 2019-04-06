@@ -6,15 +6,28 @@
 #include "Node.hpp"
 #include "Token.hpp"
 
-#include <memory>
-#include <algorithm>
+#include "FunctionDef.hpp"
+#include "FunctionMap.hpp"
 
 class ASTBuilder {
 
 public:
-    ASTBuilder(std::unique_ptr<Tokenizer> tokens):
-        _tokens{std::move(tokens)}
+    ASTBuilder(std::unique_ptr<Tokenizer> tokens, std::shared_ptr<FunctionMap> fMap):
+        _tokens{std::move(tokens)},
+        _functionMap{fMap}
     {}
+
+    std::unique_ptr<AbstractStatement> program();
+    std::unique_ptr<AbstractStatement> functionCall();
+    void functionDef();
+
+    std::unique_ptr<
+        std::vector<
+            std::unique_ptr<AbstractNode>
+            >
+        > functionCallList();
+
+    std::vector<std::string> collectFunctionArgNames();
 
     std::unique_ptr<GroupedStatements> statements();
     std::unique_ptr<AbstractStatement> statement();
@@ -29,6 +42,7 @@ public:
 
 private:
     std::unique_ptr<Tokenizer> _tokens;
+    std::shared_ptr<FunctionMap> _functionMap;
 };
 
 #endif

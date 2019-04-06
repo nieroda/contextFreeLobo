@@ -19,6 +19,7 @@ public:
 
 };
 
+
 class GroupedStatements: public AbstractStatement {
     
 public:
@@ -70,5 +71,41 @@ private:
     std::string _val;
     std::unique_ptr<AbstractNode> _assign;
 };
+
+// class Function {
+
+// public:
+//     ~Function() = default;
+
+//     virtual void evaluate(
+//         SymbolTable &,
+//         std::vector<std::unique_ptr<AbstractNode>>
+//     ) = 0;
+
+
+// }
+
+
+class FunctionCall: public AbstractStatement {
+public:
+
+    FunctionCall(
+        std::string functionName,
+        std::unique_ptr<std::vector<std::unique_ptr<AbstractNode>>> funcArgs
+    ): _functionName{functionName}, _functionArgs{std::move(funcArgs)}
+    {}
+
+    ~FunctionCall() = default;
+
+    virtual void codegen(CompilerContext *);
+    virtual void evaluate(SymbolTable &);
+    virtual void dumpAST(std::string);
+
+private:
+    std::string _functionName;
+    std::unique_ptr<std::vector<std::unique_ptr<AbstractNode>>> _functionArgs;
+    // std::unique_ptr<GroupedStatements> _funcBody;
+};
+
 
 #endif
