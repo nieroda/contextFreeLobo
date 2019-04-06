@@ -1,8 +1,9 @@
 
 nomaHacks<myFunction>(funcVal1, funcVal2, funcVal3) <<
     foo = 5
-    bar = 10    
-    print foo + bar + funcVal1
+    bar = 10 
+    eee = funcVal1 + funcVal2 + funcVal3
+    print eee
 >>
 
 

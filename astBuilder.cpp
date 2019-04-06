@@ -10,7 +10,7 @@ std::unique_ptr<AbstractStatement> ASTBuilder::program() {
 
     auto stmts = std::make_unique<GroupedStatements>();
 
-    while ( tok->isCallLobo() || tok->isNomaHacks() ) {
+    while ( tok->isCallLobo() || tok->isNomaHacks() || !tok->isEOF()) {
 
         if ( tok->isCallLobo() ) {
             _tokens->ungetToken();
@@ -70,7 +70,9 @@ std::unique_ptr<AbstractStatement> ASTBuilder::functionCall() {
     }
 
     // get list
+    // std::cout << "Before DYL" << std::endl;
     auto list = functionCallList();
+    // std::cout << "After DYL" << std::endl;
 
 
     tok = _tokens->getToken();
@@ -99,6 +101,8 @@ std::unique_ptr<std::vector<std::unique_ptr<AbstractNode>>> ASTBuilder::function
 
     while ( !tok->isRParen() ) {
 
+        _tokens->ungetToken();
+        // std::cout << "In Loop token is: " << tok->getTok() << std::endl;
         vect->push_back(arithExpr());
 
         tok = _tokens->getToken();
@@ -110,6 +114,8 @@ std::unique_ptr<std::vector<std::unique_ptr<AbstractNode>>> ASTBuilder::function
 }
 
 void ASTBuilder::functionDef() {
+
+    // std::cout << "functionDef" << std::endl;
 
     auto tok = _tokens->getToken();
 
@@ -160,7 +166,11 @@ void ASTBuilder::functionDef() {
     tok = _tokens->getToken(); // <
     tok = _tokens->getToken(); // < (2 late 2 check)
 
+    // std::cout << "Before Error" << std::endl;
+
     auto stmts = statements();
+
+    // std::cout << "After Error" << std::endl;
 
     tok = _tokens->getToken(); // <
     tok = _tokens->getToken(); // <
@@ -195,11 +205,13 @@ std::unique_ptr<GroupedStatements> ASTBuilder::statements() {
 
     auto stmts = std::make_unique<GroupedStatements>();
 
-    while ( !tok->isEOF() ) {
+    while ( !tok->isGT() ) {
         _tokens->ungetToken();
         stmts->addStatement(statement());
         tok = _tokens->getToken();
     }
+
+    _tokens->ungetToken();
     return stmts;
 }
 
@@ -220,8 +232,10 @@ std::unique_ptr<AbstractStatement> ASTBuilder::statement() {
 
 std::unique_ptr<AssignmentStatement> ASTBuilder::assign() {
 
+    // std::cout << "ASSIGN" << std::endl;
     auto tok = _tokens->getToken();
 
+    // std::cout << "ASsign First Token: " << tok->getTok() << std::endl;
     // std::cout << "ASTBuilder::assign(): " << tok->getTok() << std::endl;
 
     if ( !tok->isIdentifier() ) {
@@ -232,6 +246,9 @@ std::unique_ptr<AssignmentStatement> ASTBuilder::assign() {
     std::string identifier = tok->getTok();
 
     tok = _tokens->getToken();
+
+    // std::cout << "ASsign Second Token: " << tok->getTok() << std::endl;
+
 
     if ( !tok->isAssign() ) {
         std::cout << "Error ASTBuilder::assign()..token is " << tok->getTok() << std::endl;
@@ -329,7 +346,9 @@ std::unique_ptr<AbstractNode> ASTBuilder::arithPrimary() {
 std::unique_ptr<AbstractNode> ASTBuilder::arithFactor() {
 
     // Need error checking here
+
     auto tok = _tokens->getToken();
+    // std::cout << "Factor get token: " << tok->getTok() << std::endl;
 
     // std::cout << "ArithFactor: " << tok->getTok() << std::endl;
 

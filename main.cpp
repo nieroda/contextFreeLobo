@@ -27,6 +27,10 @@ int main() {
     // }
 
     auto astBuilder = std::make_unique<ASTBuilder>(std::move(tokens), fMap);
+
+    auto ast = astBuilder->program();
+
+
     // auto ast = astBuilder->statements();
     // SymbolTable symTab;
     // ast->evaluate(symTab);
