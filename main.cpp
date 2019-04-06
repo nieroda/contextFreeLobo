@@ -23,6 +23,8 @@
 
 int main() {
     llvm::LLVMContext TheContext;
+    llvm::LLVMContext NathansContext;
+
     std::map <std::string, llvm::Value *> NamedValues;
 
     auto num = llvm::ConstantInt::get(TheContext, llvm::APInt(32, 3, false));
@@ -36,10 +38,12 @@ int main() {
 
     auto left = llvm::ConstantFP::get(TheContext, llvm::APFloat(3.0));
     auto right = llvm::ConstantFP::get(TheContext, llvm::APFloat(4.0));
-    auto s = llvm::ConstantFP::get(TheContext, llvm::APFloat(1.0));
+    auto s = llvm::ConstantFP::get(NathansContext, llvm::APFloat(1.0));
+
     llvm::IRBuilder<> Builder{TheContext};
-    auto build = Builder.CreateFAdd(left,right, "addtmp");
-    auto nextgen = Builder.CreateFSub(s, build, "subtmp");
+
+    auto build = Builder.CreateAdd(left,right, "addtmp");
+    auto nextgen = Builder.CreateSub(s, build, "subtmp");
     //auto leftBuilder = Builder.CreateRet(left);
     //auto test = Builder.CreateRet(build);
     build->print(llvm::errs(), true);
