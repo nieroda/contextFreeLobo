@@ -2,7 +2,7 @@
 #define __FUNCTION_MAP_HPP
 
 #include "FunctionDef.hpp"
-
+#include "CompilerContext.hpp"
 //Assuming all accesses are defined accesses -- beef up later
 
 class FunctionMap {
@@ -23,12 +23,12 @@ public:
         return true;
     }
 
-    void dumpAST(std::string tab) {
+    void dumpAST(std::string tab, CompilerContext *c) {
 
         std::cout << "FuncDEFN START" << std::endl;
 
         for (auto &item: _table) {
-            item.second->dumpAST(tab);
+            item.second->dumpAST(tab, c);
             std::cout << "\n\n";
         }
 

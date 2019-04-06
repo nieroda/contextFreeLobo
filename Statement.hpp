@@ -7,6 +7,7 @@
 #include "SymbolTable.hpp"
 #include "CompilerContext.hpp"
 #include "Node.hpp"
+#include "llvm/IR/Function.h"
 
 class AbstractStatement {
 public:
@@ -15,7 +16,7 @@ public:
 
     virtual void codegen(CompilerContext *) = 0;
 
-    virtual void dumpAST(std::string) = 0;
+    virtual void dumpAST(std::string, CompilerContext *) = 0;
 
 };
 
@@ -30,7 +31,7 @@ public:
     void addStatement(std::unique_ptr<AbstractStatement> stmt);
     virtual void codegen(CompilerContext *);
 
-    virtual void dumpAST(std::string);
+    virtual void dumpAST(std::string, CompilerContext *);
 
 
 private:
@@ -46,7 +47,7 @@ public:
     virtual void evaluate(SymbolTable &);
     virtual void codegen(CompilerContext *);
 
-    virtual void dumpAST(std::string);
+    virtual void dumpAST(std::string, CompilerContext *);
 
 
 private:
@@ -64,7 +65,7 @@ public:
     virtual void evaluate(SymbolTable &);
     virtual void codegen(CompilerContext *);
 
-    virtual void dumpAST(std::string);
+    virtual void dumpAST(std::string, CompilerContext *);
 
 
 private:
@@ -97,9 +98,10 @@ public:
 
     ~FunctionCall() = default;
 
+    //virtual llvm::Function codegen(CompilerContext *);
     virtual void codegen(CompilerContext *);
     virtual void evaluate(SymbolTable &);
-    virtual void dumpAST(std::string);
+    virtual void dumpAST(std::string, CompilerContext *);
 
 private:
     std::string _functionName;

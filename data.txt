@@ -1,5 +1,5 @@
 
-nomaHacks<myFunction>(funcVal1, funcVal2, funcVal3) <<
+nomaHacks<Lobo>(funcVal1, funcVal2, funcVal3) <<
     foo = 5
     bar = 10 
     eee = funcVal1 + funcVal2 + funcVal3
@@ -8,4 +8,4 @@ nomaHacks<myFunction>(funcVal1, funcVal2, funcVal3) <<
 
 
 
-callLobo<myFunction>(1, 2, 3);
+callLobo<Lobo>(1, 2, 3);

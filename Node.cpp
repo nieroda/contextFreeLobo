@@ -2,7 +2,15 @@
 #include <iostream>
 
 #include "llvm/ADT/APInt.h"
-
+#include "llvm/IR/IRBuilder.h"
+#include "llvm/IR/Value.h"
+#include "llvm/IR/Type.h"
+#include "llvm/IR/LLVMContext.h"
+#include "llvm/Support/raw_ostream.h"
+#include "llvm/Support/raw_os_ostream.h"
+#include "llvm/IR/Constants.h"
+#include "llvm/Passes/PassBuilder.h"
+#include <map>
 int ExprNode::evaluate(SymbolTable &symTab) {
 
     int left =  _left-> evaluate(symTab);
@@ -37,30 +45,27 @@ llvm::Value *ExprNode::codegen(CompilerContext *c) {
 
     if ( tok->isSubtraction()  )
         return c->Builder.CreateSub(L, R, "subtmp");
-        //return c->Builder.CreateFSub(L, R, "subtmp");
     else if ( tok->isAddition() )
         return c->Builder.CreateAdd(L, R, "addtmp");
-        // return c->Builder.CreateFAdd(L, R, "addtmp");
     else if ( tok->isMultiplication() )
         return c->Builder.CreateMul(L, R, "multmp");
-    // else if ( tok->isDivision() )
-    //     return left / right;
-    // else if ( tok->isModOp() )
-    //     return left % right;
     return nullptr;
-
-    // just + - *
-    // return llvm::ConstantFP::get(c->TheContext, llvm::APFloat(3.));
 }
 
-void ExprNode::dumpAST(std::string tab) {
+void ExprNode::dumpAST(std::string tab, CompilerContext *c) {
     std::cout << tab << "ExprNode: " << this << std::endl;
-    _left->dumpAST(tab + "\t");
-    _right->dumpAST(tab + "\t");
+    _left->dumpAST(tab + "\t", c);
+    _right->dumpAST(tab + "\t", c);
+    (_left->codegen(c))->print(llvm::errs());
+    (_right->codegen(c))->print(llvm::errs());
 }
 
 llvm::Value *IntNode::codegen(CompilerContext *c) {
-    return llvm::ConstantFP::get(c->TheContext, llvm::APFloat(3.));
+  // auto tok = getBaseClassToken();
+   std::string::size_type sz;
+   auto value = std::stoi(getBaseClassToken()->getTok(), &sz); 
+   double val = value * 1.0;
+   return llvm::ConstantFP::get(c->TheContext, llvm::APFloat(val));
 }
 
 int IntNode::evaluate(SymbolTable &symTab) {
@@ -74,6 +79,10 @@ int IntNode::evaluate(SymbolTable &symTab) {
     return std::stoi(getBaseClassToken()->getTok());
 }
 
-void IntNode::dumpAST(std::string tab) {
+void IntNode::dumpAST(std::string tab, CompilerContext *c) {
     std::cout << tab << "IntNode: " << this << " " << getBaseClassToken()->getTok() << std::endl;
+    std::cout << "\n" << tab;
+    codegen(c)->print(llvm::errs());
+    std::cout << "\n";
+
 }
