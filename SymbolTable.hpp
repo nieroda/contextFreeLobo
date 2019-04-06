@@ -1,12 +1,16 @@
 #ifndef __CMP_SYMTAB_HPP
 #define __CMP_SYMTAB_HPP
 
+//#include "Statement.hpp"
+class AbstractStatement;
+class FunctionDefinition;
+#include "Statement.hpp"
+
 #include <map>
 #include <string>
-#include <memory>
-#include <algorithm>
+#include <iostream>
 
-//Assuming all accesses are defined accesses -- beef up later
+// class FunctionDefinition;
 
 class SymbolTable {
 public:
@@ -26,9 +30,31 @@ public:
         return true;
     }
 
+    void addFunction(std::string varName, std::shared_ptr<FunctionDefinition> func) {
+        _funcTable[varName] = func;
+    }
+
+    std::shared_ptr<FunctionDefinition> getFunction(std::string varName) {
+        return _funcTable[varName];
+    }
+
+    void dumpAST(std::string tab) {
+
+        std::cout << "FuncDEFN START" << std::endl;
+
+        for (auto &item: _funcTable) {
+            item.second->dumpAST(tab);
+            std::cout << "\n\n";
+        }
+
+        std::cout << "FuncDEF END\n\n" << std::endl;
+
+    }
 
 private:
     std::map<std::string, int> _table;
+    std::map<std::string, std::shared_ptr<FunctionDefinition>> _funcTable;
+
 };
 
 #endif

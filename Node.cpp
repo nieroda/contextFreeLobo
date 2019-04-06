@@ -1,6 +1,6 @@
 #include "Node.hpp"
 #include <iostream>
-
+#include "SymbolTable.hpp"
 #include "llvm/ADT/APInt.h"
 
 int ExprNode::evaluate(SymbolTable &symTab) {
@@ -54,7 +54,7 @@ llvm::Value *ExprNode::codegen(CompilerContext *c) {
 }
 
 void ExprNode::dumpAST(std::string tab) {
-    std::cout << tab << "ExprNode: " << this << std::endl;
+    std::cout << tab << "ExprNode: " << this << " " << getBaseClassToken()->getTok() << std::endl;
     _left->dumpAST(tab + "\t");
     _right->dumpAST(tab + "\t");
 }

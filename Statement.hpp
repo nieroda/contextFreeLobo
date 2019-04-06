@@ -1,12 +1,12 @@
 #ifndef __AST__STATEMENT__
 #define __AST__STATEMENT__
 
-#include <vector>
-#include <string>
-
-#include "SymbolTable.hpp"
+class SymbolTable;
+//#include "SymbolTable.hpp"
 #include "CompilerContext.hpp"
 #include "Node.hpp"
+
+#include <vector>
 
 class AbstractStatement {
 public:
@@ -18,6 +18,7 @@ public:
     virtual void dumpAST(std::string) = 0;
 
 };
+
 
 class GroupedStatements: public AbstractStatement {
     
@@ -70,5 +71,49 @@ private:
     std::string _val;
     std::unique_ptr<AbstractNode> _assign;
 };
+
+class FunctionCall: public AbstractStatement {
+public:
+
+    FunctionCall(
+        std::string functionName,
+        std::unique_ptr<std::vector<std::unique_ptr<AbstractNode>>> funcArgs
+    ): _functionName{functionName}, _functionArgs{std::move(funcArgs)}
+    {}
+
+    ~FunctionCall() = default;
+
+    virtual void codegen(CompilerContext *);
+    virtual void evaluate(SymbolTable &);
+    virtual void dumpAST(std::string);
+
+// private:
+    std::string _functionName;
+    std::unique_ptr<std::vector<std::unique_ptr<AbstractNode>>> _functionArgs;
+};
+
+class FunctionDefinition {
+
+public:
+    FunctionDefinition(
+        std::string functionName,
+        std::vector<std::string> functionArgNames,
+        std::unique_ptr<GroupedStatements> functionBody
+    ): _functionName{functionName},
+       _functionArgNames{functionArgNames},
+       _functionBody{std::move(functionBody)}
+    {}
+
+    void dumpAST(std::string);
+    void evaluate(SymbolTable &);
+
+
+// private:
+    std::string _functionName;
+    std::vector<std::string> _functionArgNames;
+    std::unique_ptr<GroupedStatements> _functionBody;
+};
+
+
 
 #endif
