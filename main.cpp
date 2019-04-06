@@ -33,7 +33,7 @@ int main() {
     auto ast = astBuilder->statements();
     SymbolTable symTab;
     ast->evaluate(symTab);
-    ast->printInstrs(TheContext,symTab);
+    //ast->printInstrs(TheContext,symTab);
 
 
     return 0;
