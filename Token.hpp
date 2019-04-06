@@ -25,6 +25,11 @@ public:
     bool isModOp()          { return _tok == "%";   }
     bool isLParen()         { return _tok == "(";   }
     bool isRParen()         { return _tok == ")";   }
+    bool isSemiC()          { return _tok == ";";   }
+    bool isComma()          { return _tok == ",";   }
+
+    bool isCallLobo()       { return _tok == "callLobo"; }
+    bool isNomaHacks()      { return _tok == "nomaHacks"; }
 
     bool isKeywordPrint()   { return _tok == "print"; }
 

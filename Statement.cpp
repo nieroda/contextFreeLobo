@@ -68,3 +68,27 @@ void AssignmentStatement::dumpAST(std::string tab) {
 }
 
 // END AS
+
+void FunctionCall::codegen(CompilerContext *c) {}
+
+void FunctionCall::evaluate(SymbolTable &symTab) {
+
+    auto func = symTab.getFuncMap()->getFunction(_functionName);
+
+    //Bring Function Arguments Into Scope
+    if (func->_functionArgNames.size() != _functionArgs->size()) {
+        std::cout << "There is a problem" << std::endl;
+    }
+
+    for (int i = 0; i < func->_functionArgNames.size(); i++) {
+        symTab.addItem(func->_functionArgNames[i], _functionArgs[i]->evaluate(symTab));
+    }
+
+}
+
+void FunctionCall::dumpAST(std::string tab) {
+    std::cout << tab << "FunctionCall: " << _functionName << " " << this << std::endl;
+    for_each(_functionArgs->begin(), _functionArgs->end(), [&](auto &node) {
+        node->dumpAST(tab + "\t");
+    });
+}
