@@ -30,6 +30,9 @@ int main() {
 
     auto ast = astBuilder->program();
 
+    fMap->dumpAST("");
+    ast->dumpAST("");
+
 
     // auto ast = astBuilder->statements();
     // SymbolTable symTab;

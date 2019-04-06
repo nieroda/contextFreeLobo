@@ -23,6 +23,19 @@ public:
         return true;
     }
 
+    void dumpAST(std::string tab) {
+
+        std::cout << "FuncDEFN START" << std::endl;
+
+        for (auto &item: _table) {
+            item.second->dumpAST(tab);
+            std::cout << "\n\n";
+        }
+
+        std::cout << "FuncDEF END\n\n" << std::endl;
+
+    }
+
 
 private:
     std::map<std::string, std::shared_ptr<FunctionDefinition>> _table;

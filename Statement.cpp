@@ -73,4 +73,9 @@ void FunctionCall::codegen(CompilerContext *c) {}
 
 void FunctionCall::evaluate(SymbolTable &symTab) {}
 
-void FunctionCall::dumpAST(std::string tab) {}
+void FunctionCall::dumpAST(std::string tab) {
+    std::cout << tab << "FunctionCall: " << _functionName << " " << this << std::endl;
+    for_each(_functionArgs->begin(), _functionArgs->end(), [&](auto &node) {
+        node->dumpAST(tab + "\t");
+    });
+}

@@ -106,6 +106,10 @@ std::unique_ptr<std::vector<std::unique_ptr<AbstractNode>>> ASTBuilder::function
         vect->push_back(arithExpr());
 
         tok = _tokens->getToken();
+
+        if ( tok->isComma()) {
+            tok = _tokens->getToken();
+        }
     }
 
     _tokens->ungetToken();

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 class FunctionDefinition {
 
@@ -15,6 +16,18 @@ public:
        _functionArgNames{functionArgNames},
        _functionBody{std::move(functionBody)}
     {}
+
+    void dumpAST(std::string tab) {
+
+        std::cout << tab << "FunctionDefinition: " << _functionName << "(";
+        for_each(_functionArgNames.begin(), _functionArgNames.end(), [&](auto &item) {
+            std::cout << item << ", ";
+        });
+        std::cout << std::endl;
+        _functionBody->dumpAST(tab + "\t");
+
+
+    }
 
 
 private:
